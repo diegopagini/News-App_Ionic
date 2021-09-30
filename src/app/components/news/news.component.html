@@ -1,0 +1,15 @@
+<ng-container *ngIf="news">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col
+        size="12"
+        size-lg="3"
+        size-sm="4"
+        sixe-sx="12"
+        *ngFor="let article of news.articles; let i = index"
+      >
+        <app-article [article]="article" [index]="i"></app-article>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ng-container>

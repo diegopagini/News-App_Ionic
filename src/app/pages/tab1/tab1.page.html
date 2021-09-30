@@ -5,44 +5,9 @@
 </ion-header>
 
 <ion-content color="dark" *ngIf="news$ | async as news; else loading">
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col
-        size="12"
-        size-lg="3"
-        size-sm="4"
-        sixe-sx="12"
-        *ngFor="let article of news.articles; let i = index"
-      >
-        <ion-card color="dark">
-          <ion-card-header>
-            <ion-card-subtitle>
-              <span class="text-primary">{{i + 1 }}. </span>
-              <span class="news-source-name"> {{article.source.name}}</span>
-            </ion-card-subtitle>
-            <ion-card-title>{{article.title}}</ion-card-title>
-          </ion-card-header>
-          <ion-img
-            *ngIf="article.urlToImage"
-            [src]="article.urlToImage"
-          ></ion-img>
-          <ion-card-content>
-            <p>{{article.description}}</p>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <app-news [news]="news"></app-news>
 </ion-content>
 
 <ng-template #loading>
-  <ion-content color="dark">
-    <ion-grid fixed>
-      <ion-row>
-        <ion-col size="12" class="loading">
-          <ion-spinner name="bubbles" color="light"></ion-spinner>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
+  <app-spinner class="spinner"></app-spinner>
 </ng-template>
