@@ -3,7 +3,12 @@
     <ion-title> Headers </ion-title>
   </ion-toolbar>
 
-  <ion-segment scrollable mode="md" color="primary">
+  <ion-segment
+    scrollable
+    mode="md"
+    color="primary"
+    (ionChange)="categoryChange($event)"
+  >
     <ion-segment-button
       *ngFor="let category of categories"
       mode="md"
@@ -14,8 +19,8 @@
   </ion-segment>
 </ion-header>
 
-<ion-content color="dark" *ngIf="news$ | async; else loading">
-  <div>{{ news$ | async |json}}</div>
+<ion-content color="dark" *ngIf="news$ | async as news; else loading">
+  <app-news [news]="news"></app-news>
 </ion-content>
 
 <ng-template #loading>

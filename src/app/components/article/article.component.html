@@ -1,5 +1,5 @@
 <ng-container *ngIf="article; else loading">
-  <ion-card color="dark">
+  <ion-card color="dark" (click)="openArticle()">
     <ion-card-header>
       <ion-card-subtitle>
         <span class="text-primary">{{ index + 1 }}. </span>

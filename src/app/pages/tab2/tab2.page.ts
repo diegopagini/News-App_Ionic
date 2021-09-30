@@ -29,4 +29,8 @@ export class Tab2Page implements OnInit {
 
     this.news$ = this.newsService.getTopHeadlinesCategories('business');
   }
+
+  public categoryChange(event) {
+    this.news$ = this.newsService.getTopHeadlinesCategories(event.detail.value);
+  }
 }

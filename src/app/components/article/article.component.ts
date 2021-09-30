@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Article } from 'src/app/interfaces/interface';
 
 @Component({
@@ -9,4 +10,10 @@ import { Article } from 'src/app/interfaces/interface';
 export class ArticleComponent {
   @Input() article: Article;
   @Input() index: number;
+
+  constructor(private iab: InAppBrowser) {}
+
+  public openArticle() {
+    this.iab.create(this.article.url, '_system');
+  }
 }
