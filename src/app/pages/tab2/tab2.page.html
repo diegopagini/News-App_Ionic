@@ -14,4 +14,10 @@
   </ion-segment>
 </ion-header>
 
-<ion-content color="dark"> </ion-content>
+<ion-content color="dark" *ngIf="news$ | async; else loading">
+  <div>{{ news$ | async |json}}</div>
+</ion-content>
+
+<ng-template #loading>
+  <app-spinner class="spinner"></app-spinner>
+</ng-template>
