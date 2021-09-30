@@ -1,13 +1,24 @@
 <ng-container *ngIf="article; else loading">
-  <ion-card color="dark" (click)="openArticle()">
+  <ion-card color="dark" class="news">
     <ion-card-header>
       <ion-card-subtitle>
         <span class="text-primary">{{ index + 1 }}. </span>
         <span class="news-source-name"> {{ article.source.name }}</span>
+        <div class="news-more">
+          <ion-button (click)="openMenu()" fill="clear">
+            <ion-icon name="menu-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
       </ion-card-subtitle>
-      <ion-card-title>{{ article.title }}</ion-card-title>
+      <ion-card-title (click)="openArticle()">{{
+        article.title
+      }}</ion-card-title>
     </ion-card-header>
-    <ion-img *ngIf="article.urlToImage" [src]="article.urlToImage"></ion-img>
+    <ion-img
+      (click)="openArticle()"
+      *ngIf="article.urlToImage"
+      [src]="article.urlToImage"
+    ></ion-img>
     <ion-card-content>
       <p>{{ article.description }}</p>
     </ion-card-content>

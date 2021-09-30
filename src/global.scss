@@ -49,3 +49,21 @@
 .text-capitalize {
   text-transform: capitalize;
 }
+
+.action-sheet-cancel.sc-ion-action-sheet-ios::after {
+  background-color: var(--ion-color-dark) !important;
+  color: #fff !important;
+
+  ion-icon {
+    color: #fff !important;
+  }
+}
+
+.action-dark {
+  background-color: var(--ion-color-dark) !important;
+  color: #fff !important;
+
+  ion-icon {
+    color: #fff !important;
+  }
+}
