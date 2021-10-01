@@ -1,23 +1,29 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ActionSheetController } from '@ionic/angular';
 import { Article } from 'src/app/interfaces/interface';
+import { LocalDataService } from 'src/app/services/local-data.service';
 
 @Component({
   selector: 'app-article',
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss'],
 })
-export class ArticleComponent {
+export class ArticleComponent implements OnInit {
   @Input() article: Article;
   @Input() index: number;
 
   constructor(
     private iab: InAppBrowser,
     private actionSheetController: ActionSheetController,
-    private socialSharing: SocialSharing
+    private socialSharing: SocialSharing,
+    private localDataService: LocalDataService
   ) {}
+
+  ngOnInit(): void {
+    this.localDataService.createDataBase();
+  }
 
   public openArticle() {
     this.iab.create(this.article.url, '_system');
@@ -44,7 +50,7 @@ export class ArticleComponent {
           icon: 'heart',
           cssClass: 'action-dark',
           handler: () => {
-            console.log('Favorite clicked');
+            this.localDataService.setNews(this.article);
           },
         },
         {
