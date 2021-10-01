@@ -10,7 +10,7 @@ import { LocalDataService } from 'src/app/services/local-data.service';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss'],
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent {
   @Input() article: Article;
   @Input() index: number;
 
@@ -20,10 +20,6 @@ export class ArticleComponent implements OnInit {
     private socialSharing: SocialSharing,
     private localDataService: LocalDataService
   ) {}
-
-  ngOnInit(): void {
-    this.localDataService.createDataBase();
-  }
 
   public openArticle() {
     this.iab.create(this.article.url, '_system');

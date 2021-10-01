@@ -7,7 +7,11 @@ import { Article } from '../interfaces/interface';
 })
 export class LocalDataService {
   public news: Article[] = [];
-  constructor(private storage: Storage) {}
+
+  constructor(private storage: Storage) {
+    this.createDataBase();
+    this.getNews();
+  }
 
   public createDataBase() {
     this.storage.create();
@@ -21,5 +25,8 @@ export class LocalDataService {
     }
   }
 
-  public getNews() {}
+  public async getNews() {
+    const favourites = await this.storage.get('favourite');
+    this.news = favourites;
+  }
 }
