@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Article } from 'src/app/interfaces/interface';
+import { Component } from '@angular/core';
 import { LocalDataService } from 'src/app/services/local-data.service';
 
 @Component({
