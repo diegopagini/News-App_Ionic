@@ -13,6 +13,7 @@ import { LocalDataService } from 'src/app/services/local-data.service';
 export class ArticleComponent {
   @Input() article: Article;
   @Input() index: number;
+  @Input() favouritesPage: boolean;
 
   constructor(
     private iab: InAppBrowser,
@@ -26,6 +27,27 @@ export class ArticleComponent {
   }
 
   public async openMenu() {
+    let saveOrDeleteButton;
+    if (this.favouritesPage) {
+      saveOrDeleteButton = {
+        text: 'Remove',
+        icon: 'trash',
+        cssClass: 'action-dark',
+        handler: () => {
+          this.localDataService.deleteNews(this.article);
+        },
+      };
+    } else {
+      saveOrDeleteButton = {
+        text: 'Favorite',
+        icon: 'heart',
+        cssClass: 'action-dark',
+        handler: () => {
+          this.localDataService.setNews(this.article);
+        },
+      };
+    }
+
     const actionSheet = await this.actionSheetController.create({
       buttons: [
         {
@@ -41,14 +63,7 @@ export class ArticleComponent {
             );
           },
         },
-        {
-          text: 'Favorite',
-          icon: 'heart',
-          cssClass: 'action-dark',
-          handler: () => {
-            this.localDataService.setNews(this.article);
-          },
-        },
+        saveOrDeleteButton,
         {
           text: 'Cancel',
           icon: 'close',

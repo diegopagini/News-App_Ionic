@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content color="dark">
-  <ng-container *ngIf="favourites">
+  <ng-container *ngIf="localDataService.news.length > 0; else noFavourites">
     <ion-grid fixed>
       <ion-row>
         <ion-col
@@ -13,11 +13,23 @@
           size-lg="3"
           size-sm="4"
           sixe-sx="12"
-          *ngFor="let article of favourites let i = index"
+          *ngFor="let article of localDataService.news let i = index"
         >
-          <app-article [article]="article" [index]="i"></app-article>
+          <app-article
+            [favouritesPage]="true"
+            [article]="article"
+            [index]="i"
+          ></app-article>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ng-container>
 </ion-content>
+
+<ng-template #noFavourites>
+  <ion-slides [options]="sliderOptions">
+    <ion-slide>
+      <ion-label>There is no favourites yet...</ion-label>
+    </ion-slide>
+  </ion-slides>
+</ng-template>
