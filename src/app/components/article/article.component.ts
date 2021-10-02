@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, Platform } from '@ionic/angular';
 import { Article } from 'src/app/interfaces/interface';
 import { LocalDataService } from 'src/app/services/local-data.service';
 
@@ -19,7 +19,8 @@ export class ArticleComponent {
     private iab: InAppBrowser,
     private actionSheetController: ActionSheetController,
     private socialSharing: SocialSharing,
-    private localDataService: LocalDataService
+    private localDataService: LocalDataService,
+    private platform: Platform
   ) {}
 
   public openArticle() {
@@ -55,12 +56,7 @@ export class ArticleComponent {
           icon: 'share',
           cssClass: 'action-dark',
           handler: () => {
-            this.socialSharing.share(
-              this.article.title,
-              this.article.source.name,
-              null,
-              this.article.url
-            );
+            this.shareArticle();
           },
         },
         saveOrDeleteButton,
@@ -73,5 +69,27 @@ export class ArticleComponent {
       ],
     });
     await actionSheet.present();
+  }
+
+  shareArticle() {
+    if (this.platform.is('cordova')) {
+      this.socialSharing.share(
+        this.article.title,
+        this.article.source.name,
+        null,
+        this.article.url
+      );
+    } else {
+      if (navigator.share) {
+        navigator
+          .share({
+            title: this.article.title,
+            text: this.article.source.name,
+            url: this.article.url,
+          })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      }
+    }
   }
 }
